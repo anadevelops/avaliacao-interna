@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css'; // Adicione seu CSS aqui
+import './App.css'; 
+import Sidebar from './components/menu/Sidebar';
+
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -75,53 +77,58 @@ export default function App() {
   }
 
   return (
-    <div className="container">
-      <h1>Avaliação 360º - PET</h1>
-      {semestreAtivo && <h2>Semestre: {semestreAtivo.codigo}</h2>}
+    <div className="app-layout">
+      <Sidebar />
+      <main className="app-content">
+        <div className="container">
+          <h1>Avaliação 360º - PET</h1>
+          {semestreAtivo && <h2>Semestre: {semestreAtivo.codigo}</h2>}
 
-      <div className="identificacao">
-        <label>Quem é você?</label>
-        <select value={avaliadorId} onChange={handleSelecionarAvaliador}>
-          <option value="">Selecione seu nome...</option>
-          {membros.map(m => (
-            <option key={m.id} value={m.id}>{m.nome}</option>
-          ))}
-        </select>
-      </div>
+          <div className="identificacao">
+            <label>Quem é você?</label>
+            <select value={avaliadorId} onChange={handleSelecionarAvaliador}>
+              <option value="">Selecione seu nome...</option>
+              {membros.map(m => (
+                <option key={m.id} value={m.id}>{m.nome}</option>
+              ))}
+            </select>
+          </div>
 
-      {avaliadorId !== '' && jaVotou && (
-        <div className="alerta">
-          <p>Você já enviou sua avaliação neste semestre.</p>
-        </div>
-      )}
-
-      {avaliadorId !== '' && !jaVotou && (
-        <form onSubmit={handleSubmit}>
-          {membros.map(membro => (
-            <div key={membro.id} className="card-avaliacao">
-              <h3>{membro.nome} {membro.id === avaliadorId ? "(Autoavaliação)" : ""}</h3>
-              
-              <label>Nota (0 a 10):</label>
-              <input 
-                type="number" min="0" max="10" required
-                value={formulario[membro.id]?.nota}
-                onChange={(e) => handleMudancaForm(membro.id, 'nota', e.target.value)}
-              />
-              
-              <label>Comentário:</label>
-              <textarea 
-                required rows="3"
-                value={formulario[membro.id]?.comentario}
-                onChange={(e) => handleMudancaForm(membro.id, 'comentario', e.target.value)}
-              />
+          {avaliadorId !== '' && jaVotou && (
+            <div className="alerta">
+              <p>Você já enviou sua avaliação neste semestre.</p>
             </div>
-          ))}
+          )}
 
-          <button type="submit" disabled={statusEnvio === 'enviando'}>
-            {statusEnvio === 'enviando' ? 'Salvando...' : 'Enviar Avaliações'}
-          </button>
-        </form>
-      )}
+          {avaliadorId !== '' && !jaVotou && (
+            <form onSubmit={handleSubmit}>
+              {membros.map(membro => (
+                <div key={membro.id} className="card-avaliacao">
+                  <h3>{membro.nome} {membro.id === avaliadorId ? "(Autoavaliação)" : ""}</h3>
+              
+                  <label>Nota (0 a 10):</label>
+                  <input 
+                    type="number" min="0" max="10" required
+                    value={formulario[membro.id]?.nota}
+                    onChange={(e) => handleMudancaForm(membro.id, 'nota', e.target.value)}
+                  />
+              
+                  <label>Comentário:</label>
+                  <textarea 
+                    required rows="3"
+                    value={formulario[membro.id]?.comentario}
+                    onChange={(e) => handleMudancaForm(membro.id, 'comentario', e.target.value)}
+                  />
+                </div>
+              ))}
+
+              <button type="submit" disabled={statusEnvio === 'enviando'}>
+                {statusEnvio === 'enviando' ? 'Salvando...' : 'Enviar Avaliações'}
+              </button>
+            </form>
+          )}
+        </div>
+      </main>
     </div>
   );
 }

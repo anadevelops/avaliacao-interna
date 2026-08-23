@@ -1,3 +1,32 @@
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-content {
+  min-height: 100vh;
+  margin-left: 220px;
+  padding: 48px 40px;
+  box-sizing: border-box;
+}
+
+.container {
+  width: min(100%, 880px);
+  margin: 0 auto;
+  text-align: left;
+}
+
+.container h1 {
+  margin-top: 0;
+}
+
+@media (max-width: 720px) {
+  .app-content {
+    min-height: auto;
+    margin-left: 0;
+    padding: 28px 20px;
+  }
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
