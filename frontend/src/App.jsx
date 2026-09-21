@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css'; 
-import Sidebar from './components/menu/Sidebar';
+import Sidebar from './components/sidebar/Sidebar';
+import AddMember from './components/members/AddMember';
 
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function App() {
   const [membros, setMembros] = useState([]);
+  const [addMemberOpen, setAddMemberOpen] = useState(false);
   const [semestreAtivo, setSemestreAtivo] = useState(null);
   
   const [avaliadorId, setAvaliadorId] = useState('');
@@ -78,7 +80,7 @@ export default function App() {
 
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Sidebar onAddMember={() => setAddMemberOpen(true)}/>
       <main className="app-content">
         <div className="container">
           <h1>Avaliação 360º - PET</h1>
@@ -128,6 +130,10 @@ export default function App() {
             </form>
           )}
         </div>
+        <AddMember
+          isOpen={addMemberOpen}
+          onClose={() => setAddMemberOpen(false)}
+        />
       </main>
     </div>
   );

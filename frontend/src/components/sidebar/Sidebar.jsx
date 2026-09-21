@@ -4,7 +4,7 @@ import iconMembers from "../../assets/members.png";
 import iconSemesters from "../../assets/semesters.png";
 
 
-const Sidebar = () => {
+const Sidebar = ({ onAddMember }) => {
     const [menuAberto, setMenuAberto] = useState("membros");
 
     const alternarMenu = (menu) => {
@@ -26,7 +26,7 @@ const Sidebar = () => {
                 </button>
                 {menuAberto === "membros" && (
                     <div className="sidebar-submenu">
-                        <button type="button">Adicionar</button>
+                        <button type="button" onClick={onAddMember}>Adicionar</button>
                         <button type="button">Editar</button>
                         <button type="button">Excluir</button>
                     </div>
