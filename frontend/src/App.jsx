@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css'; 
 import Sidebar from './components/sidebar/Sidebar';
 import AddMember from './components/members/AddMember';
+import AddSemester from './components/semesters/AddSemester';
 
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
@@ -10,6 +11,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 export default function App() {
   const [membros, setMembros] = useState([]);
   const [addMemberOpen, setAddMemberOpen] = useState(false);
+  const [addSemesterOpen, setAddSemesterOpen] = useState(false);
   const [semestreAtivo, setSemestreAtivo] = useState(null);
   
   const [avaliadorId, setAvaliadorId] = useState('');
@@ -80,7 +82,8 @@ export default function App() {
 
   return (
     <div className="app-layout">
-      <Sidebar onAddMember={() => setAddMemberOpen(true)}/>
+      <Sidebar onAddMember={() => setAddMemberOpen(true)}
+               onAddSemester={() => setAddSemesterOpen(true)}/>
       <main className="app-content">
         <div className="container">
           <h1>Avaliação 360º - PET</h1>
@@ -133,6 +136,11 @@ export default function App() {
         <AddMember
           isOpen={addMemberOpen}
           onClose={() => setAddMemberOpen(false)}
+        />
+
+        <AddSemester
+          isOpen={addSemesterOpen}
+          onClose={() => setAddSemesterOpen(false)}
         />
       </main>
     </div>
